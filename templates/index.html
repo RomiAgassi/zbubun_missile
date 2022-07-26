@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Ballistic caculator</title>
+
+    </head>
+    <body>
+        <form name="experience">
+            enter velucity:
+            <br>
+            <input type="text" name="velucity"/>
+            
+            <br>enter angle:
+            <br>
+            <input type="text" name="angle"/>
+            
+            <br>enter hight:
+            <br>
+            <input type="text" name="hight"/>
+            <br>
+            <h3>Make sure all the inputs are correct!</h3>
+            
+            <input type="button" value="calculate" onClick="sumValues()">
+            
+            <br>
+            location when hitting the ground: <input type="text" name="finale_location">[in meters]
+            <br>
+            <br>
+            the speed of impact with the ground is: <input type="text" name="finale_speed">[m/s]
+            <br>
+            <br>
+            the angle of impact with the ground is: <input type="text" name="hit_angle">[degrese]
+
+
+
+        </form>
+
+
+        <script type="text/javascript">
+            function sumValues()
+            {
+                var vel, angle, hight;              
+                vel=Number(document.experience.velucity.value);
+                angle=Number(document.experience.angle.value);
+                hight=Number(document.experience.hight.value);
+                
+                var vel_x, vel_y, angle_radians, t1, t2,t_ground, x, v_ground,angle_ground, angle_ground2;
+                angle_radians= angle * 2 * 3.14 / 360.0;
+                vel_x= vel*Math.cos(angle_radians);
+                vel_y = vel*Math.sin(angle_radians);
+
+                t1= (-vel_y + ((vel**2*(Math.sin(angle_radians))**2)-2*-9.8*hight)**0.5)/-9.8;
+                t2= (-vel_y - ((vel**2*(Math.sin(angle_radians))**2)-2*-9.8*hight)**0.5)/-9.8;
+
+                if(t1>t2)
+                    t_ground=t1;
+                else
+                    t_ground=t2;
+                    
+                x= vel_x*t_ground;
+                v_ground= Math.sqrt(vel_x**2 + (vel_y+(-9.8)*t_ground)**2);
+                angle_ground= Math.atan((vel_y+9.8*t_ground)/(vel_x));
+                angle_ground2= (angle_ground*180)/ 3.14;
+
+
+                document.experience.finale_location.value=x;
+                document.experience.finale_speed.value=v_ground;
+                document.experience.hit_angle.value=angle_ground2;
+
+            }
+
+
+
+
+
+
+
+        </script>
+
+
+    </body>
+
+</html>
